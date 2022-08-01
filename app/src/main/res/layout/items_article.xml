@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="8dp">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="110dp"
+        app:cardCornerRadius="10dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/ivArticle"
+                android:layout_width="110dp"
+                android:layout_height="110dp"
+                android:layout_alignParentEnd="true"
+                android:scaleType="centerCrop"
+                app:shapeAppearanceOverlay="@style/roundedImageView"
+                tools:background="@color/gray" />
+
+            <TextView
+                android:id="@+id/tvInnerCategory1"
+                style="@style/TextAppearance.AppCompat.Title.InnerCategories"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="6dp"
+                android:background="@drawable/background_curved_inner_categories"
+                android:paddingStart="12dp"
+                android:paddingTop="4dp"
+                android:paddingEnd="12dp"
+                android:paddingBottom="4dp"
+                tools:text="Politics" />
+
+            <TextView
+                android:id="@+id/tvInnerCategory2"
+                style="@style/TextAppearance.AppCompat.Title.InnerCategories"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="6dp"
+                android:layout_toEndOf="@id/tvInnerCategory1"
+                android:background="@drawable/background_curved_inner_categories"
+                android:paddingStart="12dp"
+                android:paddingTop="4dp"
+                android:paddingEnd="12dp"
+                android:paddingBottom="4dp"
+                tools:ignore="RelativeOverlap"
+                tools:text="Entertainment" />
+
+            <TextView
+                android:id="@+id/tvArticleTitle"
+                style="@style/TextAppearance.AppCompat.Title.ArticleTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvInnerCategory1"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="8dp"
+                android:layout_toStartOf="@id/ivArticle"
+                android:maxLines="3"
+                tools:text="Attacker mows down family with vehicle, kills 2 with shotgun asdfa asdfa Polic" />
+
+            <TextView
+                android:id="@+id/tvTime"
+                style="@style/TextAppearance.AppCompat.Time.ArticleTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="8dp"
+                android:layout_marginStart="12dp"
+                tools:text="2hr ago" />
+
+            <ImageView
+                android:id="@+id/ivDots"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginEnd="8dp"
+                android:layout_toStartOf="@id/ivArticle"
+                android:contentDescription="@string/menu"
+                android:src="@drawable/dots" />
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+</FrameLayout>

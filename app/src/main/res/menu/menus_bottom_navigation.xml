@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/homeFragment"
+        android:title="Home"
+        android:icon="@drawable/select_home" />
+    <item
+        android:id="@+id/exploreFragment"
+        android:title="Explore"
+        android:icon="@drawable/select_explore" />
+    <item
+        android:id="@+id/followingFragment"
+        android:title="Following"
+        android:icon="@drawable/select_following" />
+</menu>

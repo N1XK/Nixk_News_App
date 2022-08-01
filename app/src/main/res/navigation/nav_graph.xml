@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.android.nixknewsapp.ui.main.views.HomeFragment"
+        android:label="HomeFragment" />
+    <fragment
+        android:id="@+id/exploreFragment"
+        android:name="com.example.android.nixknewsapp.ui.main.views.ExploreFragment"
+        android:label="fragment_explore"
+        tools:layout="@layout/fragment_explore" >
+        <action
+            android:id="@+id/action_exploreFragment_to_searchResultFragment"
+            app:destination="@id/searchResultFragment" />
+        <action
+            android:id="@+id/action_exploreFragment_to_detailsCategoriesFragment"
+            app:destination="@id/detailsCategoriesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchResultFragment"
+        android:name="com.example.android.nixknewsapp.ui.main.views.SearchResultFragment"
+        android:label="fragment_search_result"
+        tools:layout="@layout/fragment_search_result" />
+    <fragment
+        android:id="@+id/followingFragment"
+        android:name="com.example.android.nixknewsapp.ui.main.views.FollowingFragment"
+        android:label="fragment_following"
+        tools:layout="@layout/fragment_following" />
+    <fragment
+        android:id="@+id/detailsCategoriesFragment"
+        android:name="com.example.android.nixknewsapp.ui.main.views.DetailsCategoriesFragment"
+        android:label="fragment_details_categories"
+        tools:layout="@layout/fragment_details_categories" >
+        <argument
+            android:name="category"
+            app:argType="com.example.android.nixknewsapp.data.model.Category" />
+    </fragment>
+</navigation>

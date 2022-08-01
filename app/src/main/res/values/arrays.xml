@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="tabs">
+        <item>Trending</item>
+        <item>General</item>
+        <item>Business</item>
+        <item>Sports</item>
+        <item>Tech</item>
+        <item>Health</item>
+        <item>Science</item>
+        <item>Politics</item>
+        <item>Entertainment</item>
+        <item>Food</item>
+        <item>travel</item>
+    </string-array>
+</resources>
