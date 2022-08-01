@@ -1,10 +1,10 @@
 # Nixk_News_App
 
 [X]
-pagination indicator
-motionlayout startup a little lag
-save article
-popupmenu in recycleritem
-redesign toolbar title
-theme
-recyclerview click item -> webview
+1. pagination indicator
+2. motionlayout startup a little lag
+3. save article
+4. popupmenu in recycleritem
+5. redesign toolbar title
+6. theme
+7. recyclerview click item -> webview
