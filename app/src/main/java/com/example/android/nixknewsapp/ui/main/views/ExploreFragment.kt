@@ -105,25 +105,4 @@ class ExploreFragment : Fragment() {
         super.onDestroy()
         _binding = null
     }
-
-//    private fun performOptionsMenuClick(position: Int) {
-//        val popupMenu = PopupMenu(requireContext(), binding.rvSearch[position].findViewById(R.id.imageView))
-//        popupMenu.inflate(R.menu.popup_menu)
-//        popupMenu.setOnMenuItemClickListener(object : PopupMenu.OnMenuItemClickListener {
-//            override fun onMenuItemClick(item: MenuItem?): Boolean {
-//                when (item?.itemId) {
-//                    R.id.menu_save -> {
-//                        Toast.makeText(requireContext(), "Article Saved.", Toast.LENGTH_SHORT).show()
-//                        return true
-//                    }
-//                    R.id.menu_delete -> {
-//                        Toast.makeText(requireContext(), "Article Deleted.", Toast.LENGTH_SHORT).show()
-//                        return true
-//                    }
-//                }
-//                return false
-//            }
-//        })
-//        popupMenu.show()
-//    }
 }

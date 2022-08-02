@@ -19,20 +19,6 @@ class CategoriesAdapter(
 ): RecyclerView.Adapter<CategoriesAdapter.ViewHolder>() {
     class ViewHolder(private val binding: ItemsCategoriesBinding
     ) : RecyclerView.ViewHolder(binding.root) {
-
-//        init {
-//            binding.imageView.setOnClickListener {
-//                val popupMenu = PopupMenu(binding.imageView.context, it)
-//                popupMenu.inflate(R.menu.popup_menu)
-//                popupMenu.setOnMenuItemClickListener { menu ->
-//                    when (menu.itemId) {
-//                        R.id.menu_save -> {
-//
-//                        }
-//                    }
-//                }
-//            }
-//        }
         fun bind(category: Category, context: Context) {
             Glide.with(context).load(category.imageId).into(binding.imageView)
             binding.tvTitle.text = category.title

@@ -36,9 +36,9 @@
                     style="@style/TextAppearance.AppCompat.Title.Title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
                     android:layout_alignParentTop="true"
-                    android:layout_marginEnd="157dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="20dp"
                     android:text="Home" />
             </RelativeLayout>
         </androidx.appcompat.widget.Toolbar>

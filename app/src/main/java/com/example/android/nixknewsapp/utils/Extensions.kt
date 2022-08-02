@@ -1,7 +1,6 @@
 package com.example.android.nixknewsapp.utils
 
 import android.text.format.DateUtils
-import android.util.Log
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*

@@ -38,4 +38,10 @@ interface ArticleDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertArticles(articles: List<Article>)
+
+    @Query("SELECT * FROM articles WHERE isSaved = 1")
+    fun getSavedArticles(): Flow<List<Article>>
+
+    @Update
+    suspend fun updateArticle(article: Article)
 }

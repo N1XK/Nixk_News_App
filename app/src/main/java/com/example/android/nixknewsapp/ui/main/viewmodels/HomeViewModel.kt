@@ -53,6 +53,12 @@ class HomeViewModel @Inject constructor(
 
     val travelNews = repository.getTravelNews().cachedIn(viewModelScope)
 
+    val savedArticles = repository.getSavedArticles()
+
+    fun saveArticle(article: Article) = viewModelScope.launch {
+        repository.updateArticle(article)
+    }
+
     sealed class Event {
         data class ShowErrorMessage(val error: Throwable) : Event()
     }

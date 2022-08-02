@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.PopupMenu
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -11,6 +13,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.android.nixknewsapp.R
+import com.example.android.nixknewsapp.data.model.Article
 import com.example.android.nixknewsapp.databinding.FragmentScienceBinding
 import com.example.android.nixknewsapp.ui.main.adapters.ArticlePagingAdapter
 import com.example.android.nixknewsapp.ui.main.adapters.NewsLoadStateAdapter
@@ -39,7 +43,9 @@ class ScienceFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        articlePagingAdapter = ArticlePagingAdapter()
+        articlePagingAdapter = ArticlePagingAdapter { view, article ->
+            popupMenus(view, article)
+        }
         articlePagingAdapter.stateRestorationPolicy =
             RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
         binding.apply {
@@ -68,5 +74,30 @@ class ScienceFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+    }
+
+    private fun popupMenus(view: View, article: Article) {
+        val popupMenus = PopupMenu(requireContext(), view)
+        popupMenus.inflate(R.menu.popup_menu)
+        popupMenus.setOnMenuItemClickListener { menu ->
+            when(menu.itemId) {
+                R.id.menu_save -> {
+                    article.isSaved = true
+                    homeViewModel.saveArticle(article)
+                    Toast.makeText(context, "Saved Deleted.", Toast.LENGTH_SHORT).show()
+                    true
+                }
+                R.id.menu_delete -> {
+                    Toast.makeText(context, "Article Deleted.", Toast.LENGTH_SHORT).show()
+                    true
+                }
+                R.id.menu_share -> {
+                    Toast.makeText(context, "Article Shared.", Toast.LENGTH_SHORT).show()
+                    true
+                }
+                else -> true
+            }
+        }
+        popupMenus.show()
     }
 }

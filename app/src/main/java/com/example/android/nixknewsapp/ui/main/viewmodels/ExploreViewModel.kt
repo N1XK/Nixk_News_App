@@ -2,11 +2,13 @@ package com.example.android.nixknewsapp.ui.main.viewmodels
 
 import androidx.lifecycle.*
 import androidx.paging.cachedIn
+import com.example.android.nixknewsapp.data.model.Article
 import com.example.android.nixknewsapp.data.model.Repository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -59,4 +61,9 @@ class ExploreViewModel @Inject constructor(
 
     val smashingMagazine = repository.getSmashingMagazine().cachedIn(viewModelScope)
 
+    val savedArticles = repository.getSavedArticles()
+
+    fun saveArticle(article: Article) = viewModelScope.launch {
+        repository.updateArticle(article)
+    }
 }

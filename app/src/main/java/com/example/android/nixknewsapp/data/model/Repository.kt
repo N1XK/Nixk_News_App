@@ -183,6 +183,13 @@ class Repository @Inject constructor(
             config = PagingConfig(pageSize = NETWORK_PAGING_SIZE, enablePlaceholders = false),
             pagingSourceFactory = { NewsPagingSource(SMASHING_MAGAZINE_TAG, service) }
         ).flow
+
+    fun getSavedArticles() : Flow<List<Article>> =
+        articleDao.getSavedArticles()
+
+    suspend fun updateArticle(article: Article) {
+        articleDao.updateArticle(article)
+    }
 }
 
 private const val GENERAL_NEWS_TAG = "general"

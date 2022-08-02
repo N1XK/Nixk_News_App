@@ -20,8 +20,8 @@ import com.example.android.nixknewsapp.databinding.ItemsTopStoriesBinding
 import com.example.android.nixknewsapp.utils.Extensions.formatTimeAgo
 
 class TopStoriesAdapter(
-//    val context: Context
-    ): ListAdapter<Article, TopStoriesAdapter.ArticleViewHolder>(
+    private val onMenuClicked: (View, Article) -> Unit,
+): ListAdapter<Article, TopStoriesAdapter.ArticleViewHolder>(
     object : DiffUtil.ItemCallback<Article>() {
         override fun areItemsTheSame(oldItem: Article, newItem: Article): Boolean {
             return oldItem.uuid == newItem.uuid
@@ -37,7 +37,9 @@ class TopStoriesAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
 
         init {
-//            binding.ivDots.setOnClickListener { popupMenus(it) }
+            binding.ivDots.setOnClickListener { view ->
+                onMenuClicked(view, getItem(bindingAdapterPosition))
+            }
         }
 
         fun bind(article: Article, context: Context) {
@@ -52,29 +54,6 @@ class TopStoriesAdapter(
                 tvTime.text = article.published_at?.formatTimeAgo() ?: ""
             }
         }
-
-//        private fun popupMenus(view: View) {
-//            val position = bindingAdapterPosition
-//            val popupMenus = PopupMenu(context, view)
-//            popupMenus.inflate(R.menu.popup_menu)
-//            popupMenus.setOnMenuItemClickListener { menu ->
-//                when(menu.itemId) {
-//                    R.id.menu_save -> {
-//                        Toast.makeText(context, "Article Saved.", Toast.LENGTH_SHORT).show()
-//                        true
-//                    }
-//                    R.id.menu_delete -> {
-//                        Toast.makeText(context, "Article Deleted.", Toast.LENGTH_SHORT).show()
-//                        true
-//                    }
-//                    R.id.menu_share -> {
-//                        Toast.makeText(context, "Article Shared.", Toast.LENGTH_SHORT).show()
-//                        true
-//                    }
-//                    else -> true
-//                }
-//            }
-//        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArticleViewHolder {

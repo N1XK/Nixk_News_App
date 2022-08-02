@@ -13,7 +13,8 @@ data class Article(
     val title: String?,
     val url: String?,
     @PrimaryKey val uuid: String,
-    val relevance_score: Float? = null
+    val relevance_score: Float? = null,
+    var isSaved: Boolean = false
 )
 
 @Entity(tableName = "top_stories")
