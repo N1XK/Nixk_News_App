@@ -3,8 +3,7 @@
 [X]
 1. pagination indicator
 2. motionlayout startup a little lag
-3. save article
-4. popupmenu in recycleritem
-5. redesign toolbar title
-6. theme
-7. recyclerview click item -> webview
+3. popupmenu in recycleritem -> need best pratice
+4. theme
+5. recyclerview click item -> webview
+6. savestate
