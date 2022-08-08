@@ -92,4 +92,6 @@ dependencies {
     //Third Party Library
     implementation 'me.relex:circleindicator:2.1.6' //RecyclerView Indicator
     implementation "com.airbnb.android:lottie:4.0.0" //Lottie Animation
+
+    debugImplementation "com.github.chuckerteam.chucker:library:3.5.2"
 }
