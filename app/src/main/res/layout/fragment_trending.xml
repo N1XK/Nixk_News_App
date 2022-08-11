@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="8dp"
     android:clipToPadding="false"
-    tools:context=".ui.main.views.TrendingFragment">
+    tools:context=".ui.main.views.pagers.TrendingFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvTrending"

@@ -1,7 +1,11 @@
-package com.example.android.nixknewsapp.data.model
+package com.example.android.nixknewsapp.data.db
 
 import androidx.paging.PagingSource
 import androidx.room.*
+import com.example.android.nixknewsapp.data.model.Article
+import com.example.android.nixknewsapp.data.model.ExploreNews
+import com.example.android.nixknewsapp.data.model.TopStory
+import com.example.android.nixknewsapp.data.model.TrendingNews
 import kotlinx.coroutines.flow.Flow
 
 @Dao

@@ -1,4 +1,4 @@
-package com.example.android.nixknewsapp.ui.main.views
+package com.example.android.nixknewsapp.ui.main.views.pagers
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
 import android.widget.Toast
-import androidx.core.view.get
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -16,7 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.android.nixknewsapp.R
 import com.example.android.nixknewsapp.data.model.Article
-import com.example.android.nixknewsapp.databinding.FragmentTechBinding
+import com.example.android.nixknewsapp.databinding.FragmentTrendingBinding
 import com.example.android.nixknewsapp.ui.main.adapters.ArticlePagingAdapter
 import com.example.android.nixknewsapp.ui.main.adapters.NewsLoadStateAdapter
 import com.example.android.nixknewsapp.ui.main.viewmodels.HomeViewModel
@@ -24,10 +23,10 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
-class TechFragment : Fragment() {
+class TrendingFragment : Fragment() {
     private val homeViewModel: HomeViewModel by viewModels()
 
-    private var _binding: FragmentTechBinding? = null
+    private var _binding: FragmentTrendingBinding? = null
     private val binding get() = _binding!!
 
     private lateinit var articlePagingAdapter: ArticlePagingAdapter
@@ -37,7 +36,7 @@ class TechFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentTechBinding.inflate(inflater, container, false)
+        _binding = FragmentTrendingBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -50,22 +49,25 @@ class TechFragment : Fragment() {
         articlePagingAdapter.stateRestorationPolicy =
             RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
         binding.apply {
-            rvTech.apply {
+            rvTrending.apply {
                 adapter = articlePagingAdapter.withLoadStateFooter(NewsLoadStateAdapter())
-                layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-                setHasFixedSize(true)
+                layoutManager =
+                    LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
             }
+
             viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-                homeViewModel.techNews.collectLatest { data ->
-                    val result = data ?: return@collectLatest
-                    articlePagingAdapter.submitData(result)
+                homeViewModel.trendingNews.collectLatest {
+                    articlePagingAdapter.submitData(it)
                 }
             }
+
             viewLifecycleOwner.lifecycleScope.launchWhenStarted {
                 articlePagingAdapter.loadStateFlow.collect { loadState ->
-                    rvTech.isVisible = loadState.source.refresh is LoadState.NotLoading
-                    loading.isVisible = loadState.source.refresh is LoadState.Loading
+                    rvTrending.isVisible = loadState.source.refresh is LoadState.NotLoading
+                            || loadState.mediator?.refresh is LoadState.NotLoading
+                    loading.isVisible = loadState.mediator?.refresh is LoadState.Loading
                     tvError.isVisible = loadState.source.refresh is LoadState.Error
+                            && loadState.mediator?.refresh is LoadState.Error
                             && articlePagingAdapter.itemCount == 0
                 }
             }
@@ -89,7 +91,6 @@ class TechFragment : Fragment() {
                     true
                 }
                 R.id.menu_delete -> {
-                    Toast.makeText(context, "Article Deleted.", Toast.LENGTH_SHORT).show()
                     true
                 }
                 R.id.menu_share -> {

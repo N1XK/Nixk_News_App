@@ -36,22 +36,13 @@ class MainActivity : AppCompatActivity() {
         binding.bottomNavigationView.setupWithNavController(navController)
 
         binding.bottomNavigationView.itemIconTintList = null
-        binding.bottomNavigationView.setOnItemSelectedListener { menu ->
-            when (menu.itemId) {
-                R.id.homeFragment -> {
-                    binding.tvTitle.text = "Home"
-                    navController.navigate(R.id.homeFragment)
-                }
-                R.id.exploreFragment -> {
-                    binding.tvTitle.text = "Explore"
-                    navController.navigate(R.id.exploreFragment)
-                }
-                R.id.followingFragment -> {
-                    binding.tvTitle.text = "Following"
-                    navController.navigate(R.id.followingFragment)
-                }
-            }
-            true
+
+        navController.addOnDestinationChangedListener{ _,dest,_ ->
+            binding.tvTitle.text =
+                if (dest.id == R.id.homeFragment) "Home"
+                else if (dest.id == R.id.exploreFragment) "Explore"
+                else if (dest.id == R.id.followingFragment) "Following"
+                else "Detail"
         }
     }
 

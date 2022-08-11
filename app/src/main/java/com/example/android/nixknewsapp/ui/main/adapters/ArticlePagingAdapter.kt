@@ -45,7 +45,7 @@ class ArticlePagingAdapter(
                 .into(binding.ivArticle)
             binding.apply {
                 // TODO("to make better logic")
-                if (article.categories != null) {
+                if (!article.categories.isNullOrEmpty()) {
                     tvInnerCategory1.text = article.categories.first().toString()
                     if (article.categories.size > 2) {
                         tvInnerCategory2.text = article.categories[1]

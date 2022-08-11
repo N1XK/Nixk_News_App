@@ -4,7 +4,17 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.example.android.nixknewsapp.ui.main.views.*
+import com.example.android.nixknewsapp.ui.main.views.pagers.BusinessFragment
+import com.example.android.nixknewsapp.ui.main.views.pagers.EntertainmentFragment
+import com.example.android.nixknewsapp.ui.main.views.pagers.FoodFragment
+import com.example.android.nixknewsapp.ui.main.views.pagers.GeneralFragment
+import com.example.android.nixknewsapp.ui.main.views.pagers.HealthFragment
+import com.example.android.nixknewsapp.ui.main.views.pagers.PoliticsFragment
+import com.example.android.nixknewsapp.ui.main.views.pagers.ScienceFragment
+import com.example.android.nixknewsapp.ui.main.views.pagers.SportsFragment
+import com.example.android.nixknewsapp.ui.main.views.pagers.TechFragment
+import com.example.android.nixknewsapp.ui.main.views.pagers.TravelFragment
+import com.example.android.nixknewsapp.ui.main.views.pagers.TrendingFragment
 import com.example.android.nixknewsapp.utils.Constants.Companion.NUM_TABS
 
 class ViewPagerAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycle
