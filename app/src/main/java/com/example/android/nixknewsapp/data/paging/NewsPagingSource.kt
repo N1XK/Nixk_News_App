@@ -1,9 +1,9 @@
-package com.example.android.nixknewsapp.data.model
+package com.example.android.nixknewsapp.data.paging
 
-import androidx.paging.LoadType
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.example.android.nixknewsapp.data.api.NewsApi
+import com.example.android.nixknewsapp.data.model.Article
 import com.example.android.nixknewsapp.utils.Constants.Companion.STARTING_PAGE_INDEX
 import retrofit2.HttpException
 import java.io.IOException

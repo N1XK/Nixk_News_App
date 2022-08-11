@@ -1,20 +1,22 @@
-package com.example.android.nixknewsapp.data.model
+package com.example.android.nixknewsapp.data.mediators
 
-import android.util.Log
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
 import com.example.android.nixknewsapp.data.api.NewsApi
+import com.example.android.nixknewsapp.data.db.ArticleDatabase
+import com.example.android.nixknewsapp.data.model.Article
+import com.example.android.nixknewsapp.data.model.RemoteKeys
+import com.example.android.nixknewsapp.data.model.TrendingNews
 import com.example.android.nixknewsapp.utils.Constants.Companion.STARTING_PAGE_INDEX
 import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
 
 @OptIn(ExperimentalPagingApi::class)
-class ExploreRemoteMediator @Inject constructor(
-    private val query: String,
+class TrendingRemoteMediator @Inject constructor(
     private val service: NewsApi,
     private val database: ArticleDatabase
 ) : RemoteMediator<Int, Article>() {
@@ -29,7 +31,6 @@ class ExploreRemoteMediator @Inject constructor(
         loadType: LoadType,
         state: PagingState<Int, Article>
     ): MediatorResult {
-        Log.i("Mediator", "$loadType")
         val page = when (loadType) {
             LoadType.REFRESH -> {
                 val remoteKeys = getRemoteKeyClosestToCurrentPosition(state)
@@ -43,7 +44,6 @@ class ExploreRemoteMediator @Inject constructor(
             }
             LoadType.APPEND -> {
                 val remoteKeys = getRemoteKeyForLastItem(state)
-                Log.i("Mediator", "$remoteKeys")
                 val nextKey = remoteKeys?.nextKey
                     ?: return MediatorResult.Success(endOfPaginationReached = remoteKeys != null)
                 nextKey
@@ -51,11 +51,11 @@ class ExploreRemoteMediator @Inject constructor(
         }
 
         try {
-            val response = service.getExploreNews(searchQuery = query, page = page)
-            val serverExploreNews = response.data
-            val endOfPaginationReached = serverExploreNews.isEmpty()
+            val response = service.getTrendingNews(page = page)
+            val serverTrendingNews = response.data
+            val endOfPaginationReached = serverTrendingNews.isEmpty()
 
-            val exploreNewsArticles = serverExploreNews.map { article ->
+            val trendingNewsArticles = serverTrendingNews.map { article ->
                 Article(
                     categories = article.categories,
                     image_url = article.image_url,
@@ -64,29 +64,23 @@ class ExploreRemoteMediator @Inject constructor(
                     published_at = article.published_at,
                     title = article.title,
                     url = article.url,
-                    uuid = article.uuid,
-                    relevance_score = article.relevance_score
+                    uuid = article.uuid
                 )
             }
-            val exploreNews = exploreNewsArticles.map { article ->
-                ExploreNews(
-                    searchQuery = query,
-                    uuid_explore_news = article.uuid,
-                    relevance_score_explore = article.relevance_score
-                )
+            val trendingNews = trendingNewsArticles.map { article ->
+                TrendingNews(uuid_trending_news = article.uuid)
             }
+
 
             database.withTransaction {
                 if (loadType == LoadType.REFRESH) {
                     remoteKeysDao.clearRemoteKeys()
-                    articleDao.deleteExploreNews()
+                    articleDao.deleteTrendingNews()
                 }
 
                 val prevKey = if (page == STARTING_PAGE_INDEX) null else page - 1
-                Log.i("Mediator", "prevKey: $prevKey")
                 val nextKey = if (endOfPaginationReached) null else page + 1
-                Log.i("Mediator", "nextKey: $nextKey")
-                val keys = serverExploreNews.map { article ->
+                val keys = serverTrendingNews.map { article ->
                     RemoteKeys(
                         uuid = article.uuid,
                         prevKey = prevKey,
@@ -95,8 +89,8 @@ class ExploreRemoteMediator @Inject constructor(
                 }
 
                 remoteKeysDao.insertAll(keys)
-                articleDao.insertArticles(exploreNewsArticles)
-                articleDao.insertExploreNews(exploreNews)
+                articleDao.insertArticles(trendingNewsArticles)
+                articleDao.insertTrendingNews(trendingNews)
             }
             return MediatorResult.Success(endOfPaginationReached = endOfPaginationReached)
         } catch (exception: IOException) {
@@ -107,9 +101,8 @@ class ExploreRemoteMediator @Inject constructor(
     }
 
     private suspend fun getRemoteKeyForLastItem(state: PagingState<Int, Article>): RemoteKeys? {
-        return state.pages.lastOrNull { it.data.isNotEmpty() }?.data?.lastOrNull()
+        return state.pages.lastOrNull() { it.data.isNotEmpty() }?.data?.lastOrNull()
             ?.let { article ->
-                Log.i("Mediator", "${article.uuid}")
                 remoteKeysDao.getRemoteKeysUuid(article.uuid)
             }
     }

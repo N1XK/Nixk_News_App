@@ -8,5 +8,16 @@ class Constants {
         const val NUM_TABS = 8
         const val STARTING_PAGE_INDEX = 1
         const val NETWORK_PAGING_SIZE = 5
+
+         const val GENERAL_NEWS_TAG = "general"
+         const val BUSINESS_NEWS_TAG = "business"
+         const val SPORTS_NEWS_TAG = "sports"
+         const val TECH_NEWS_TAG = "tech"
+         const val HEALTH_NEWS_TAG = "health"
+         const val SCIENCE_NEWS_TAG = "science"
+         const val POLITICS_NEWS_TAG = "politics"
+         const val ENTERTAINMENT_NEWS_TAG = "entertainment"
+         const val FOOD_NEWS_TAG = "food"
+         const val TRAVEL_NEWS_TAG = "travel"
     }
 }

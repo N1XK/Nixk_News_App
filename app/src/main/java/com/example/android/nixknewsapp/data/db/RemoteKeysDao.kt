@@ -1,9 +1,10 @@
-package com.example.android.nixknewsapp.data.model
+package com.example.android.nixknewsapp.data.db
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import com.example.android.nixknewsapp.data.model.RemoteKeys
 
 @Dao
 interface RemoteKeysDao {
