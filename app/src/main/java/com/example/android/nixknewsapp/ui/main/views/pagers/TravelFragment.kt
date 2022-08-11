@@ -1,4 +1,4 @@
-package com.example.android.nixknewsapp.ui.main.views
+package com.example.android.nixknewsapp.ui.main.views.pagers
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.android.nixknewsapp.R
 import com.example.android.nixknewsapp.data.model.Article
-import com.example.android.nixknewsapp.databinding.FragmentHealthBinding
+import com.example.android.nixknewsapp.databinding.FragmentTravelBinding
 import com.example.android.nixknewsapp.ui.main.adapters.ArticlePagingAdapter
 import com.example.android.nixknewsapp.ui.main.adapters.NewsLoadStateAdapter
 import com.example.android.nixknewsapp.ui.main.viewmodels.HomeViewModel
@@ -23,10 +23,10 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
-class HealthFragment : Fragment() {
+class TravelFragment : Fragment() {
     private val homeViewModel: HomeViewModel by viewModels()
 
-    private var _binding: FragmentHealthBinding? = null
+    private var _binding: FragmentTravelBinding? = null
     private val binding get() = _binding!!
 
     private lateinit var articlePagingAdapter: ArticlePagingAdapter
@@ -36,33 +36,33 @@ class HealthFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentHealthBinding.inflate(inflater, container, false)
+        _binding = FragmentTravelBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        articlePagingAdapter = ArticlePagingAdapter  { view, article ->
+        articlePagingAdapter = ArticlePagingAdapter { view, article ->
             popupMenus(view, article)
         }
         articlePagingAdapter.stateRestorationPolicy =
             RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
         binding.apply {
-            rvHealth.apply {
+            rvTravel.apply {
                 adapter = articlePagingAdapter.withLoadStateFooter(NewsLoadStateAdapter())
                 layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
                 setHasFixedSize(true)
             }
             viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-                homeViewModel.healthNews.collectLatest { data ->
+                homeViewModel.travelNews.collectLatest { data ->
                     val result = data ?: return@collectLatest
                     articlePagingAdapter.submitData(result)
                 }
             }
             viewLifecycleOwner.lifecycleScope.launchWhenStarted {
                 articlePagingAdapter.loadStateFlow.collect { loadState ->
-                    rvHealth.isVisible = loadState.source.refresh is LoadState.NotLoading
+                    rvTravel.isVisible = loadState.source.refresh is LoadState.NotLoading
                     loading.isVisible = loadState.source.refresh is LoadState.Loading
                     tvError.isVisible = loadState.source.refresh is LoadState.Error
                             && articlePagingAdapter.itemCount == 0

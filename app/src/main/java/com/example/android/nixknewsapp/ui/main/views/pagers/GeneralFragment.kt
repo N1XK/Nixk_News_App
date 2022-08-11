@@ -1,4 +1,4 @@
-package com.example.android.nixknewsapp.ui.main.views
+package com.example.android.nixknewsapp.ui.main.views.pagers
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.android.nixknewsapp.R
 import com.example.android.nixknewsapp.data.model.Article
-import com.example.android.nixknewsapp.databinding.FragmentSportsBinding
+import com.example.android.nixknewsapp.databinding.FragmentGeneralBinding
 import com.example.android.nixknewsapp.ui.main.adapters.ArticlePagingAdapter
 import com.example.android.nixknewsapp.ui.main.adapters.NewsLoadStateAdapter
 import com.example.android.nixknewsapp.ui.main.viewmodels.HomeViewModel
@@ -23,10 +23,10 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
-class SportsFragment : Fragment() {
+class GeneralFragment : Fragment() {
     private val homeViewModel: HomeViewModel by viewModels()
 
-    private var _binding: FragmentSportsBinding? = null
+    private var _binding: FragmentGeneralBinding? = null
     private val binding get() = _binding!!
 
     private lateinit var articlePagingAdapter: ArticlePagingAdapter
@@ -36,7 +36,7 @@ class SportsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentSportsBinding.inflate(inflater, container, false)
+        _binding = FragmentGeneralBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -49,20 +49,20 @@ class SportsFragment : Fragment() {
         articlePagingAdapter.stateRestorationPolicy =
             RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
         binding.apply {
-            rvSports.apply {
+            rvGeneral.apply {
                 adapter = articlePagingAdapter.withLoadStateFooter(NewsLoadStateAdapter())
                 layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
                 setHasFixedSize(true)
             }
             viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-                homeViewModel.sportsNews.collectLatest { data ->
+                homeViewModel.generalNews.collectLatest { data ->
                     val result = data ?: return@collectLatest
                     articlePagingAdapter.submitData(result)
                 }
             }
             viewLifecycleOwner.lifecycleScope.launchWhenStarted {
                 articlePagingAdapter.loadStateFlow.collect { loadState ->
-                    rvSports.isVisible = loadState.source.refresh is LoadState.NotLoading
+                    rvGeneral.isVisible = loadState.source.refresh is LoadState.NotLoading
                     loading.isVisible = loadState.source.refresh is LoadState.Loading
                     tvError.isVisible = loadState.source.refresh is LoadState.Error
                             && articlePagingAdapter.itemCount == 0
@@ -75,7 +75,6 @@ class SportsFragment : Fragment() {
         super.onDestroy()
         _binding = null
     }
-
     private fun popupMenus(view: View, article: Article) {
         val popupMenus = PopupMenu(requireContext(), view)
         popupMenus.inflate(R.menu.popup_menu)
